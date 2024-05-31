@@ -1,1 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Platformer Game</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+      background-color: #87CEEB;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="800" height="600"></canvas>
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let player = {
+      x: 50,
+      y: 50,
+      width: 50,
+      height: 50,
+      speedX: 0,
+      speedY: 0
+    };
+
+    function drawPlayer() {
+      ctx.fillStyle = 'red';
+      ctx.fillRect(player.x, player.y, player.width, player.height);
+    }
+
+    function update() {
+      clearCanvas();
+      drawPlayer();
+      requestAnimationFrame(update);
+    }
+
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function movePlayer() {
+      player.x += player.speedX;
+      player.y += player.speedY;
+    }
+
+    function keyDownHandler(event) {
+      if (event.key === 'ArrowRight') {
+        player.speedX = 5;
+      } else if (event.key === 'ArrowLeft') {
+        player.speedX = -5;
+      } else if (event.key === 'ArrowUp') {
+        player.speedY = -5;
+      } else if (event.key === 'ArrowDown') {
+        player.speedY = 5;
+      }
+    }
+
+    function keyUpHandler(event) {
+      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        player.speedX = 0;
+      } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+        player.speedY = 0;
+      }
+    }
+
+    document.addEventListener('keydown', keyDownHandler, false);
+    document.addEventListener('keyup', keyUpHandler, false);
+
+    update();
+  </script>
+</body>
+</html>
 
